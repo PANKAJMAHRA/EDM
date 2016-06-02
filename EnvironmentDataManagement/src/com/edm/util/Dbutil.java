@@ -11,8 +11,8 @@ public class Dbutil {
 	public static Connection getConnection() {
 		try {
 			System.out.println("in database");
-			Class.forName("com.mysql.jdbc.driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/record", "root", "tiger");
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/environment_project", "root", "tiger");
 
 		} catch (ClassNotFoundException cnfe) {
 			System.out.println(cnfe);
