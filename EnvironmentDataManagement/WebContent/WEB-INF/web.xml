@@ -6,6 +6,6 @@
 	<display-name>EnvironmentDataManagement</display-name>
 	<welcome-file-list>
 		
-		<welcome-file>listapplication.jsp</welcome-file>
+		<welcome-file>meanu.html</welcome-file>
 	</welcome-file-list>
 </web-app>

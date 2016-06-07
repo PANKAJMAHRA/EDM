@@ -42,6 +42,49 @@ public class ApplicationDao {
 		}
 	}
 
+	public boolean updateApplication(ApplicationBean applicationbean) {
+		try {
+			System.out.println("syso");
+			PreparedStatement preparedstatement = connection
+					.prepareStatement("update application set name=?,deployment_location=?,log_type=? where id=?");
+			System.out.println("inside prepared statement");
+			preparedstatement.setString(1, applicationbean.getName());
+			preparedstatement.setString(2, applicationbean.getDeploymentLocation());
+			preparedstatement.setString(3, applicationbean.getLogType());
+			preparedstatement.setInt(4, applicationbean.getId());
+			int res = preparedstatement.executeUpdate();
+			if (res > 0) {
+				System.out.println("system updated");
+				return true;
+			}
+
+			else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+	public boolean deleteApplication(ApplicationBean applicationbean){
+		try{
+			PreparedStatement preparedstatement=connection.prepareStatement("delete from application where id=?");
+			preparedstatement.setInt(1,applicationbean.getId());
+			int res=preparedstatement.executeUpdate();
+			if(res>0){
+				System.out.println("deleted...");
+				return true;
+			}
+			else{
+				return false;
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+			return true;
+		}
+	}
+
 	public List<ApplicationBean> getAllApplication() {
 		List<ApplicationBean> application = new ArrayList<ApplicationBean>();
 		try {
@@ -62,4 +105,28 @@ public class ApplicationDao {
 		}
 		return application;
 	}
+
+	public ApplicationBean getApplicationById(int id) {
+		ApplicationBean applicationbean = null;
+
+		try {
+			PreparedStatement preparedstatement = connection.prepareStatement("select * from application where id=?");
+			preparedstatement.setInt(1, id);
+			ResultSet resultset = preparedstatement.executeQuery();
+			while (resultset.next()) {
+				applicationbean = new ApplicationBean();
+
+				applicationbean.setId(resultset.getInt(1));
+				applicationbean.setName(resultset.getString(2));
+				applicationbean.setDeploymentLocation(resultset.getString(3));
+				applicationbean.setLogType(resultset.getString(4));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return applicationbean;
+
+	}
+
 }

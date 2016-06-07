@@ -25,8 +25,8 @@
 <td><c:out value="${ app.name}"/></td>
 <td><c:out value="${ app.deploymentLocation}"></c:out></td>
 <td><c:out value="${ app.logType}"></c:out></td>
-<td><a href="EDMController?action=editApplication&ApplicationId=<c:out value="${app.id}"/>">Edit</a></td>
-<td><a href="EDMController?action=deleteApplication&ApplicationId=<c:out value="${app.id}"/>">Delete</a></td>
+<td><a href="EDMController?action=editapplication&ApplicationId=<c:out value="${app.id}"/>">Edit</a></td>
+<td><a href="EDMController?action=deleteapplication&ApplicationId=<c:out value="${app.id}"/>">Delete</a></td>
 </tr>
 </c:forEach>
 </tbody>

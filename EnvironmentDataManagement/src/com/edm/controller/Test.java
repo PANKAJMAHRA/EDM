@@ -15,7 +15,7 @@ public class Test {
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/environment_project", "root", "tiger");
 			System.out.println("connecteddd");
 			Statement stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select * from server");
+			ResultSet rs = stat.executeQuery("select * from application");
 			if (rs.next()) {
 				System.out.println("has record>>>");
 			} else {

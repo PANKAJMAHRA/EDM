@@ -82,7 +82,64 @@ public class EDMController extends HttpServlet {
 			} else {
 				System.out.println("insertion failed");
 			}
-		} else {
+		} else if (action.equalsIgnoreCase("editapplication")) {
+
+			forward = "/applicationedit.jsp";
+			System.out.println("inside edit application");
+
+			int id = Integer.parseInt(request.getParameter("ApplicationId"));
+			ab = applicationdao.getApplicationById(id);
+			ArrayList<ApplicationBean> applicationlist = new ArrayList<ApplicationBean>();
+			applicationlist.add(ab);
+			request.setAttribute("applicationlist", applicationlist);
+			RequestDispatcher rd = request.getRequestDispatcher("applicationedit.jsp");
+			System.out.println(".....");
+			rd.include(request, response);
+
+		}
+
+		else if (action.equalsIgnoreCase("updateapplication")) {
+			System.out.println("inside update application");
+			int id = Integer.parseInt(request.getParameter("id"));
+
+			String name = request.getParameter("name");// values as in
+														// applicationedit name
+			ab.setName(name);
+			String dl = request.getParameter("deploc");// values as in
+														// applicationedit
+														// deploc
+			ab.setDeploymentLocation(dl);
+			String lt = request.getParameter("logtype");
+			ab.setLogType(lt);
+			ab.setId(id);
+			boolean bol = applicationdao.updateApplication(ab);
+			System.out.println("update application!!!!");
+			if (bol == true) {
+				System.out.println("updated sucessfully");
+				List<ApplicationBean> list = new ArrayList<ApplicationBean>();
+				list = applicationdao.getAllApplication();
+				request.setAttribute("applicationlist", list);
+				forward = List_Application;
+
+			} else {
+				System.out.println("update failed");
+			}
+		}else if(action.equalsIgnoreCase("deleteapplication")){
+			//forward="/applicationedit.jsp";
+			int id =Integer.parseInt(request.getParameter("ApplicationId"));
+			ab.setId(id);
+			boolean bol=applicationdao.deleteApplication(ab);
+			if(bol==true){
+				System.out.println("deleteappplication executed");
+				List<ApplicationBean> list=new ArrayList<ApplicationBean>();
+				list=applicationdao.getAllApplication();
+				request.setAttribute("applicationlist",list);
+				System.out.println("in servlet after method calling");
+				forward=List_Application;
+			}
+		}
+
+		else {
 			System.out.println("inside else method");
 		}
 		RequestDispatcher requestdispacher = request.getRequestDispatcher(forward);
