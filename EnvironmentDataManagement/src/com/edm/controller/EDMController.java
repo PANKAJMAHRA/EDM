@@ -51,8 +51,11 @@ public class EDMController extends HttpServlet {
 		if (action.equalsIgnoreCase("listapplication")) {
 			System.out.println("in list calling");
 			List<ApplicationBean> list = new ArrayList<ApplicationBean>();
+			List<ApplicationTypeBean> list1=new ArrayList<ApplicationTypeBean>();
 			list = applicationdao.getAllApplication();
+			list1=applicationdao.getAllAplicationType();
 			request.setAttribute("applicationlist", list);
+			request.setAttribute("applicationlist",list1);
 			forward = List_Application;
 
 		} else if (action.equalsIgnoreCase("addapplication")) {
@@ -62,8 +65,8 @@ public class EDMController extends HttpServlet {
 
 		} else if (action.equals("addapplication1")) {
 			// ApplicationBean applicationbean
-			int id = Integer.parseInt(request.getParameter("id"));
-			ab.setId(id);
+			// int id = Integer.parseInt(request.getParameter("id"));
+			// ab.setId(id);
 			String name = request.getParameter("name");
 			ab.setName(name);
 			String dl = request.getParameter("deploymentlocation");
@@ -75,14 +78,40 @@ public class EDMController extends HttpServlet {
 			if (bol == true) {
 				System.out.println("inserted sucessfully");
 
-				List<ApplicationBean> list = new ArrayList<ApplicationBean>();
-				list = applicationdao.getAllApplication();
-				request.setAttribute("applicationlist", list);
-				forward = List_Application;
+				//List<ApplicationBean> list = new ArrayList<ApplicationBean>();
+				//list = applicationdao.getAllApplication();
+				//request.setAttribute("applicationlist", list);
+				//forward = List_Application;
 			} else {
 				System.out.println("insertion failed");
 			}
-		} else if (action.equalsIgnoreCase("editapplication")) {
+
+		}else if(action.equalsIgnoreCase("addapplicationtype")){
+			String atype=request.getParameter("apptype");
+			atb.setApplicationType(atype);
+			int id=Integer.parseInt(request.getParameter("id"));
+			atb.setApplicationId(id);
+			
+			boolean bol=applicationdao.addApplicationType(atb,ab);
+			if(bol== true){
+				System.out.println("inserted sucessfully apptype");
+				
+				List<ApplicationTypeBean> list1= new ArrayList<ApplicationTypeBean>();
+				List<ApplicationBean> list = new ArrayList<ApplicationBean>();
+				list = applicationdao.getAllApplication();
+				list1=applicationdao.getAllAplicationType();
+				request.setAttribute("applicationlist", list);
+				request.setAttribute("applicationlist", list1);
+				forward = List_Application;
+				
+			}
+			
+		}
+		
+		
+		
+		
+		else if (action.equalsIgnoreCase("editapplication")) {
 
 			forward = "/applicationedit.jsp";
 			System.out.println("inside edit application");
@@ -124,18 +153,18 @@ public class EDMController extends HttpServlet {
 			} else {
 				System.out.println("update failed");
 			}
-		}else if(action.equalsIgnoreCase("deleteapplication")){
-			//forward="/applicationedit.jsp";
-			int id =Integer.parseInt(request.getParameter("ApplicationId"));
+		} else if (action.equalsIgnoreCase("deleteapplication")) {
+			// forward="/applicationedit.jsp";
+			int id = Integer.parseInt(request.getParameter("ApplicationId"));
 			ab.setId(id);
-			boolean bol=applicationdao.deleteApplication(ab);
-			if(bol==true){
+			boolean bol = applicationdao.deleteApplication(ab);
+			if (bol == true) {
 				System.out.println("deleteappplication executed");
-				List<ApplicationBean> list=new ArrayList<ApplicationBean>();
-				list=applicationdao.getAllApplication();
-				request.setAttribute("applicationlist",list);
+				List<ApplicationBean> list = new ArrayList<ApplicationBean>();
+				list = applicationdao.getAllApplication();
+				request.setAttribute("applicationlist", list);
 				System.out.println("in servlet after method calling");
-				forward=List_Application;
+				forward = List_Application;
 			}
 		}
 

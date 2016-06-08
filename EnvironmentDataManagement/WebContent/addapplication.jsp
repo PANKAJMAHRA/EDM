@@ -8,13 +8,14 @@
 <title>Add Application</title>
 </head>
 <body>
-hello
 <form method="post" action="EDMController">
-Id:<input type="text" name="id"/><br>
+<%--Id:<input type="text" name="id"/><br>--%>
 Name:<input type="text" name="name"/><br>
 Deployment Location:<input type="text" name="deploymentlocation"/><br>
 Log Type:<input type="text" name="logtype"/><br>
 <input type="hidden" name="action" value="addapplication1"/>
+Application Type:<input type="text" name="apptype">
+<input type="hidden" name="action" value="addapplicationtype">
 <input type="submit" value="submit"/>
 </form>
 </body>

@@ -15,6 +15,7 @@
 <th>Name</th>
 <th>Deployment Location</th>
 <th>Log Type</th>
+<th>Application Type</th>
 <th colspan=2>Action</th>
 </tr>
 </thead>
@@ -25,6 +26,7 @@
 <td><c:out value="${ app.name}"/></td>
 <td><c:out value="${ app.deploymentLocation}"></c:out></td>
 <td><c:out value="${ app.logType}"></c:out></td>
+<td><c:out value="${app.applicationType}"></c:out></td>
 <td><a href="EDMController?action=editapplication&ApplicationId=<c:out value="${app.id}"/>">Edit</a></td>
 <td><a href="EDMController?action=deleteapplication&ApplicationId=<c:out value="${app.id}"/>">Delete</a></td>
 </tr>
