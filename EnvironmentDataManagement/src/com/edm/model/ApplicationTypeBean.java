@@ -4,7 +4,6 @@ public class ApplicationTypeBean {
 	
 	private int id;
 	private String applicationType;
-	private int applicationId;
 	public int getId() {
 		return id;
 	}
@@ -17,14 +16,5 @@ public class ApplicationTypeBean {
 	public void setApplicationType(String applicationType) {
 		this.applicationType = applicationType;
 	}
-	public int getApplicationId() {
-		return applicationId;
-	}
-	public void setApplicationId(int applicationId) {
-		this.applicationId = applicationId;
 	}
 	
-	
-	
-
-}

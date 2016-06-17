@@ -1,17 +1,11 @@
 package com.edm.model;
 
-public class ApplicationBean {
+public class CommonBean {
 	private int id;
 	private String name;
 	private String deploymentLocation;
 	private String logType;
-	private int applicationTypeId; 
-	public int getApplicationTypeId() {
-		return applicationTypeId;
-	}
-	public void setApplicationTypeId(int applicationTypeId) {
-		this.applicationTypeId = applicationTypeId;
-	}
+	private int applicationType;
 	public int getId() {
 		return id;
 	}
@@ -36,9 +30,12 @@ public class ApplicationBean {
 	public void setLogType(String logType) {
 		this.logType = logType;
 	}
-	
-	
-	
+	public int getApplicationType() {
+		return applicationType;
+	}
+	public void setApplicationType(int applicationType) {
+		this.applicationType = applicationType;
+	}
 	
 
 }

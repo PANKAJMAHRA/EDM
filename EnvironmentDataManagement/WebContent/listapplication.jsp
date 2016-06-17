@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>List Application</title>
 </head>
 <body>
 <table border=1>
@@ -15,8 +15,8 @@
 <th>Name</th>
 <th>Deployment Location</th>
 <th>Log Type</th>
-<th>Application Type</th>
-<th colspan=2>Action</th>
+<th>Application Type Id</th>
+<th colspan=3>Action</th>
 </tr>
 </thead>
 <tbody>
@@ -26,13 +26,15 @@
 <td><c:out value="${ app.name}"/></td>
 <td><c:out value="${ app.deploymentLocation}"></c:out></td>
 <td><c:out value="${ app.logType}"></c:out></td>
-<td><c:out value="${app.applicationType}"></c:out></td>
+<td><c:out value="${app.applicationTypeId}"></c:out></td>
 <td><a href="EDMController?action=editapplication&ApplicationId=<c:out value="${app.id}"/>">Edit</a></td>
 <td><a href="EDMController?action=deleteapplication&ApplicationId=<c:out value="${app.id}"/>">Delete</a></td>
+<td><a href="EDMController?action=listalldata&ApplicationId=<c:out value="${app.id}" />">View All</a></td>
 </tr>
 </c:forEach>
 </tbody>
 </table>
 <p><a href="EDMController?action=addapplication">Add Application</a></p>
+
 </body>
 </html>

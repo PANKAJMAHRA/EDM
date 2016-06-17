@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.edm.model.ApplicationBean;
-import com.edm.model.ApplicationTypeBean;
 import com.edm.util.Dbutil;
 
 public class ApplicationDao {
@@ -23,12 +22,13 @@ public class ApplicationDao {
 	public boolean addApplication(ApplicationBean applicationbean) {
 		try {
 			System.out.println("inside add application ");
-			PreparedStatement preparedstatement = connection
-					.prepareStatement("insert into application(name,deployment_location,log_type) values (?,?,?)");
+			PreparedStatement preparedstatement = connection.prepareStatement(
+					"insert into application(name,deployment_location,log_type,application_type_id) values (?,?,?,?)");
 			// preparedstatement.setInt(1, applicationbean.getId());
 			preparedstatement.setString(1, applicationbean.getName());
 			preparedstatement.setString(2, applicationbean.getDeploymentLocation());
 			preparedstatement.setString(3, applicationbean.getLogType());
+			preparedstatement.setInt(4, applicationbean.getApplicationTypeId());
 			int res = preparedstatement.executeUpdate();
 
 			if (res > 0) {
@@ -43,37 +43,17 @@ public class ApplicationDao {
 		}
 	}
 
-	public boolean addApplicationType(ApplicationTypeBean applicationtypebean, ApplicationBean applicationbean) {
-		try {
-			System.out.println("inside add applicationtype..");
-			PreparedStatement preparedstatement = connection
-					.prepareStatement("insert into application_type(application_type,application_id) values (?,?)");
-			preparedstatement.setString(1, applicationtypebean.getApplicationType());
-			preparedstatement.setInt(2, applicationbean.getId());
-			int res = preparedstatement.executeUpdate();
-			if (res > 0) {
-				System.out.println("data inserted sucessfully");
-				return true;
-			} else {
-				return false;
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
 	public boolean updateApplication(ApplicationBean applicationbean) {
 		try {
 			System.out.println("syso");
-			PreparedStatement preparedstatement = connection
-					.prepareStatement("update application set name=?,deployment_location=?,log_type=? where id=?");
+			PreparedStatement preparedstatement = connection.prepareStatement(
+					"update application set name=?,deployment_location=?,log_type=?,application_type_id=? where id=?");
 			System.out.println("inside prepared statement");
 			preparedstatement.setString(1, applicationbean.getName());
 			preparedstatement.setString(2, applicationbean.getDeploymentLocation());
 			preparedstatement.setString(3, applicationbean.getLogType());
-			preparedstatement.setInt(4, applicationbean.getId());
+			preparedstatement.setInt(4, applicationbean.getApplicationTypeId());
+			preparedstatement.setInt(5, applicationbean.getId());
 			int res = preparedstatement.executeUpdate();
 			if (res > 0) {
 				System.out.println("system updated");
@@ -121,6 +101,7 @@ public class ApplicationDao {
 				applicationbean.setName(resultset.getString(2));
 				applicationbean.setDeploymentLocation(resultset.getString(3));
 				applicationbean.setLogType(resultset.getString(4));
+				applicationbean.setApplicationTypeId(resultset.getInt(5));
 				// applicationtypebean.setApplicationId(resultset.getInt(5));
 
 				application.add(applicationbean);
@@ -131,25 +112,6 @@ public class ApplicationDao {
 
 		}
 		return application;
-	}
-
-	public List<ApplicationTypeBean> getAllAplicationType() {
-		List<ApplicationTypeBean> applicationtype = new ArrayList<ApplicationTypeBean>();
-		try {
-			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery("Select * from application_type");
-			while (rs.next()) {
-				ApplicationTypeBean applicationbeantype = new ApplicationTypeBean();
-				applicationbeantype.setId(rs.getInt(1));
-				applicationbeantype.setApplicationType(rs.getString(2));
-				applicationbeantype.setApplicationId(rs.getInt(3));
-				applicationtype.add(applicationbeantype);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return applicationtype;
 	}
 
 	public ApplicationBean getApplicationById(int id) {
@@ -166,6 +128,7 @@ public class ApplicationDao {
 				applicationbean.setName(resultset.getString(2));
 				applicationbean.setDeploymentLocation(resultset.getString(3));
 				applicationbean.setLogType(resultset.getString(4));
+				applicationbean.setApplicationTypeId(resultset.getInt(5));
 			}
 
 		} catch (SQLException e) {

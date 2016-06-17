@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.edm.dao.ApplicationDao;
+import com.edm.dao.ApplicationTypeDao;
+import com.edm.dao.CommonDao;
 import com.edm.model.ApplicationBean;
 import com.edm.model.ApplicationTypeBean;
+import com.edm.model.CommonBean;
 import com.edm.model.EnvironmentBean;
 import com.edm.model.NetworkDomainBean;
 import com.edm.model.ServerBean;
@@ -27,6 +30,10 @@ public class EDMController extends HttpServlet {
 
 	String forward;
 	ApplicationDao applicationdao;
+	ApplicationTypeDao applicationtypedao;
+	CommonDao commondao;
+	
+	CommonBean commonbean=new CommonBean();
 
 	ApplicationBean ab = new ApplicationBean();
 	ApplicationTypeBean atb = new ApplicationTypeBean();
@@ -38,6 +45,8 @@ public class EDMController extends HttpServlet {
 	public EDMController() {
 		super();
 		applicationdao = new ApplicationDao();
+		applicationtypedao= new ApplicationTypeDao();
+		commondao=new CommonDao();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -45,17 +54,17 @@ public class EDMController extends HttpServlet {
 		// TODO Auto-generated method stub
 		// response.getWriter().append("Served at:
 		// ").append(request.getContextPath());
-		System.out.println("inside controller");
+		System.out.println("inside EDMcontroller");
 		String action = request.getParameter("action");
 
 		if (action.equalsIgnoreCase("listapplication")) {
 			System.out.println("in list calling");
 			List<ApplicationBean> list = new ArrayList<ApplicationBean>();
-			List<ApplicationTypeBean> list1=new ArrayList<ApplicationTypeBean>();
+			//List<ApplicationTypeBean> list1=new ArrayList<ApplicationTypeBean>();
 			list = applicationdao.getAllApplication();
-			list1=applicationdao.getAllAplicationType();
+			//list1=applicationdao.getAllAplicationType();
 			request.setAttribute("applicationlist", list);
-			request.setAttribute("applicationlist",list1);
+			//request.setAttribute("applicationlist",list1);
 			forward = List_Application;
 
 		} else if (action.equalsIgnoreCase("addapplication")) {
@@ -67,26 +76,30 @@ public class EDMController extends HttpServlet {
 			// ApplicationBean applicationbean
 			// int id = Integer.parseInt(request.getParameter("id"));
 			// ab.setId(id);
+			System.out.println("inside addapplication1");
 			String name = request.getParameter("name");
 			ab.setName(name);
 			String dl = request.getParameter("deploymentlocation");
 			ab.setDeploymentLocation(dl);
 			String lt = request.getParameter("logtype");
 			ab.setLogType(lt);
+			int ati=Integer.parseInt(request.getParameter("apptypeid"));
+			ab.setApplicationTypeId(ati);
 
 			boolean bol = applicationdao.addApplication(ab);
 			if (bol == true) {
 				System.out.println("inserted sucessfully");
 
-				//List<ApplicationBean> list = new ArrayList<ApplicationBean>();
-				//list = applicationdao.getAllApplication();
-				//request.setAttribute("applicationlist", list);
-				//forward = List_Application;
+				List<ApplicationBean> list = new ArrayList<ApplicationBean>();
+				list = applicationdao.getAllApplication();
+				request.setAttribute("applicationlist", list);
+				forward = List_Application;
 			} else {
 				System.out.println("insertion failed");
 			}
 
-		}else if(action.equalsIgnoreCase("addapplicationtype")){
+		}
+		/*else if(action.equalsIgnoreCase("addapplicationtype")){
 			String atype=request.getParameter("apptype");
 			atb.setApplicationType(atype);
 			int id=Integer.parseInt(request.getParameter("id"));
@@ -106,6 +119,25 @@ public class EDMController extends HttpServlet {
 				
 			}
 			
+		}*/
+		
+		
+		else if(action.equalsIgnoreCase("listalldata")){
+			//List<CommonBean> list=new ArrayList<CommonBean>();
+			//list=commondao.viewAllData(id);
+			System.out.println("inside list all data");
+			//forward="/viewalldata.jsp";
+			int id=Integer.parseInt(request.getParameter("ApplicationId"));
+			System.out.println(id);
+			System.out.println(".,.,.,.,");
+			commonbean=commondao.viewAllData(id);
+			
+			ArrayList<CommonBean> list=new ArrayList<CommonBean>();
+			list.add(commonbean);
+			request.setAttribute("commonlist",list);
+			//RequestDispatcher rd= request.getRequestDispatcher("viewalldata.jsp");
+			//rd.include(request, response);
+			forward="/viewalldata.jsp";
 		}
 		
 		
@@ -131,15 +163,15 @@ public class EDMController extends HttpServlet {
 			System.out.println("inside update application");
 			int id = Integer.parseInt(request.getParameter("id"));
 
-			String name = request.getParameter("name");// values as in
-														// applicationedit name
+			String name = request.getParameter("name");// values as in applicationedit name
+													
 			ab.setName(name);
-			String dl = request.getParameter("deploc");// values as in
-														// applicationedit
-														// deploc
+			String dl = request.getParameter("deploc");// values as in applicationedit deploc
 			ab.setDeploymentLocation(dl);
 			String lt = request.getParameter("logtype");
 			ab.setLogType(lt);
+			int ati=Integer.parseInt(request.getParameter("apptypeid"));
+			ab.setApplicationTypeId(ati);
 			ab.setId(id);
 			boolean bol = applicationdao.updateApplication(ab);
 			System.out.println("update application!!!!");
@@ -167,6 +199,15 @@ public class EDMController extends HttpServlet {
 				forward = List_Application;
 			}
 		}
+		else if(action.equalsIgnoreCase("listapplicationtype")){
+			System.out.println("inside listapplicationtype");
+			List<ApplicationTypeBean> list=new ArrayList<ApplicationTypeBean>();
+			list=applicationtypedao.getAllApplicationType();
+			request.setAttribute("applicationtypelist", list);
+			forward="/listapplicationtype.jsp";
+
+		}
+			
 
 		else {
 			System.out.println("inside else method");

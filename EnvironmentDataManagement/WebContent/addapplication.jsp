@@ -13,9 +13,9 @@
 Name:<input type="text" name="name"/><br>
 Deployment Location:<input type="text" name="deploymentlocation"/><br>
 Log Type:<input type="text" name="logtype"/><br>
+Application Type Id:<input type="text" name="apptypeid">
+<a href="applicationtype.jsp" target="_blank">check</a><br>
 <input type="hidden" name="action" value="addapplication1"/>
-Application Type:<input type="text" name="apptype">
-<input type="hidden" name="action" value="addapplicationtype">
 <input type="submit" value="submit"/>
 </form>
 </body>

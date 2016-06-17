@@ -14,6 +14,7 @@ Id:<input  type="text" readonly="readonly" name="id" value="<c:out value="${app.
 Name:<input type="text" name="name" value="<c:out value="${app.name}"/>"/><br/>
 Deployment Location:<input type="text" name="deploc" value="<c:out value="${app.deploymentLocation }"/>"/><br/>
 Log Type:<input type="text" name="logtype" value="<c:out value="${app.logType }"/>"/><br/>
+Application Type Id:<input type="text" name="apptypeid" value="<c:out value="${app.applicationTypeId }"/>"/><br>
 </c:forEach>
 <input type="hidden" name="action" value="updateapplication"/>
 <input type="submit" value="submit"> 
