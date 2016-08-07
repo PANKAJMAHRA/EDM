@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<jsp:forward page="/EDMController?action=listapplication"></jsp:forward>
+<jsp:forward page="/EnvironmentController?action=listenvironment"></jsp:forward>
 </body>
 </html>
